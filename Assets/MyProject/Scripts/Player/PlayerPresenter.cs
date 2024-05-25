@@ -17,6 +17,7 @@ public class PlayerPresenter : Presenter
         { 
             if (collider.TryGetComponent(out InteractView view))
             {
+                _model.OnInteract();
                 view.OnInteract(_model);
                 break;
             }

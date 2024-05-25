@@ -4,16 +4,18 @@ using UnityEngine;
 public class InteractView : View, IInteractable
 {
     [SerializeField] private InteractType _interactType;
+    [SerializeField] private Vector3 _openRotate;
+    [SerializeField] private Vector3 _closeRotate;
 
     public InteractType Type => _interactType;
-    public event Func<InteractType, System.Object, InteractType> Interact;
+    public event Func<InteractType, object, InteractType> Interact;
 
     private void Awake()
     {
-        new InteractModel(this);
+        new InteractModel(this, transform, _openRotate, _closeRotate);
     }
 
-    public void OnInteract(System.Object sender)
+    public void OnInteract(object sender)
     {
         _interactType = (InteractType)Interact?.Invoke(_interactType, sender);
     }

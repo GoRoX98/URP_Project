@@ -14,7 +14,7 @@ public class PlayerView : View
     {
         _input = GetComponent<PlayerInput>();
         _interact = _input.actions["Interact"];
-        PlayerModel model = new PlayerModel();
+        PlayerModel model = new PlayerModel(GetComponent<Animator>());
         _presenter = new(model, this);
     }
 
@@ -34,7 +34,6 @@ public class PlayerView : View
 
         if (objects.Length > 0 )
         {
-            print("Try Interact");
             _presenter.OnInteract(objects);
         }
     }
