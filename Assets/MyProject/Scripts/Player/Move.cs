@@ -15,11 +15,14 @@ public class Move : MonoBehaviour
     private float _currentSpeed;
     private float _currentJump = 0f;
     private bool _onGround = true;
+    private float _groundTimeReaction = 1f;
+    private float _groundTimer = 0f;
 
     private PlayerInput _input;
     private InputAction _move;
     private InputAction _sprint;
     private InputAction _jump;
+    private InputAction _rotate;
     private Vector3 _moveValue;
 
     public float Stamina => _stamina;
@@ -32,6 +35,7 @@ public class Move : MonoBehaviour
         _move = _input.actions["Move"];
         _sprint = _input.actions["Sprint"];
         _jump = _input.actions["Jump"];
+        _rotate = _input.actions["Rotation"];
         _onGround = _charController.isGrounded;
     }
 
@@ -51,6 +55,10 @@ public class Move : MonoBehaviour
 
     private void Update()
     {
+        float x = _rotate.ReadValue<float>();
+        transform.Rotate(Vector3.up, x);
+        
+
         if ((_currentSpeed > _walkSpeed && _stamina <= 0) || _timerCD > 0)
         {
             _currentSpeed = _walkSpeed;
@@ -60,14 +68,43 @@ public class Move : MonoBehaviour
                 _timerCD -= Time.deltaTime;
         }
 
-        _onGround = _charController.isGrounded;
-        _moveValue = new Vector3(_move.ReadValue<Vector2>().x, _currentJump, _move.ReadValue<Vector2>().y);
+        _onGround = IsOnGround();
+        _moveValue = new Vector3(_move.ReadValue<Vector2>().x, _currentJump, 0) + _move.ReadValue<Vector2>().y * transform.forward;
         _charController.Move(_moveValue * _currentSpeed * Time.deltaTime);
+        
+        UpdateAnimator();
+        UpdateStamina();
+
+        if (_currentJump > 0)
+        {
+            _currentJump -= 4 * Time.deltaTime;
+            _currentJump = _currentJump < 0 ? 0 : _currentJump;
+        }
+    }
+
+    private bool IsOnGround()
+    {
+        if (!_charController.isGrounded)
+            _groundTimer += Time.deltaTime;
+        else
+            _groundTimer = 0f;
+
+        if (_groundTimer < _groundTimeReaction)
+            return true;
+        else
+            return false;
+    }
+
+    private void UpdateAnimator()
+    {
         _animator.SetFloat("Speed", _charController.velocity.magnitude);
         _animator.SetBool("OnGround", _onGround);
-        _animator.SetFloat("X", _moveValue.x);
-        _animator.SetFloat("Z", _moveValue.z);
-        
+        _animator.SetFloat("X", _move.ReadValue<Vector2>().x);
+        _animator.SetFloat("Z", _move.ReadValue<Vector2>().y);
+    }
+
+    private void UpdateStamina()
+    {
         if (_currentSpeed > _walkSpeed && _stamina > 0)
         {
             _stamina -= 10 * Time.deltaTime;
@@ -75,12 +112,6 @@ public class Move : MonoBehaviour
         else if (_currentSpeed <= _walkSpeed && _stamina < _maxStamina)
         {
             _stamina += 10 * Time.deltaTime;
-        }
-
-        if (_currentJump > 0)
-        {
-            _currentJump -= 4 * Time.deltaTime;
-            _currentJump = _currentJump < 0 ? 0 : _currentJump;
         }
     }
 
