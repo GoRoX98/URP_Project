@@ -69,7 +69,7 @@ public class Move : MonoBehaviour
         }
 
         _onGround = IsOnGround();
-        _moveValue = new Vector3(_move.ReadValue<Vector2>().x, _currentJump, 0) + _move.ReadValue<Vector2>().y * transform.forward;
+        _moveValue = new Vector3(0, _currentJump, 0) + _move.ReadValue<Vector2>().x * transform.right + _move.ReadValue<Vector2>().y * transform.forward;
         _charController.Move(_moveValue * _currentSpeed * Time.deltaTime);
         
         UpdateAnimator();

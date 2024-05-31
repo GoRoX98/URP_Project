@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c5f865533590b34dbe11d0a046edb23, type: 3}
+  m_Name: Task_ComeToBarell
+  m_EditorClassIdentifier: 
+  _name: Come To Barell
+  _description: Come to barrel near by with 2 house
+  _score: 200
+  _comeToPos: {x: 29.51, y: 0.35873175, z: 51.92}
+  _maxCheckDistance: 1
