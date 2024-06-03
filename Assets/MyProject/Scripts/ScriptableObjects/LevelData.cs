@@ -7,6 +7,7 @@ public class LevelData : ScriptableObject
     [SerializeField] private string _name;
     [SerializeField] private List<TaskData> _tasksData = new List<TaskData>();
 
+    public string Name => _name;
     public List<TaskData> Tasks => _tasksData;
     public int MaxScore
     {

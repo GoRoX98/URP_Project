@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class SceneManager : MonoBehaviour
+public class LevelManager : MonoBehaviour
 {
 
     [SerializeField] private LevelData _data;
@@ -11,6 +10,11 @@ public class SceneManager : MonoBehaviour
     private int _currentScore = 0;
     private Transform _player;
     private List<GameTask> _tasks = new List<GameTask>();
+
+    public string Name => _data.Name;
+    public int MaxScore => _maxScore;
+    public int CurrentScore => _currentScore;
+
 
     private void Awake()
     {
@@ -42,5 +46,11 @@ public class SceneManager : MonoBehaviour
     {
         print($"Task {task.Name} complete");
         _currentScore += task.Score;
+        TestJsonSave.Instance.Save();
+    }
+
+    private void OnExit()
+    {
+        GameManager.Instance.Save(this);
     }
 }
