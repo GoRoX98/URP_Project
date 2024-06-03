@@ -5,6 +5,7 @@ public class LevelManager : MonoBehaviour
 {
 
     [SerializeField] private LevelData _data;
+    [SerializeField] private HUD _hud;
 
     private int _maxScore;
     private int _currentScore = 0;
@@ -27,6 +28,12 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        _hud.Init(_data.Tasks);
+        _hud.UpdateScore(_currentScore, _maxScore);
+    }
+
     private void OnEnable()
     {
         GameTask.TaskComplete += OnTaskComplete;
@@ -46,7 +53,7 @@ public class LevelManager : MonoBehaviour
     {
         print($"Task {task.Name} complete");
         _currentScore += task.Score;
-        TestJsonSave.Instance.Save();
+        _hud.UpdateScore( _currentScore, _maxScore );
     }
 
     private void OnExit()

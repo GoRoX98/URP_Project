@@ -8,6 +8,7 @@ public abstract class GameTask
     public string Name => _data.Name;
     public string Description => _data.Description;
     public int Score => _data.Score;
+    public TaskData Data => _data;
 
     public GameTask(TaskData data)
     {

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Test Level
   _tasksData:
-  - {fileID: 11400000, guid: ec7897e1076227a46a24522f0ba104b3, type: 2}
   - {fileID: 11400000, guid: 61cf38c487cf15149a01b349d3ce620b, type: 2}
+  - {fileID: 11400000, guid: ec7897e1076227a46a24522f0ba104b3, type: 2}
