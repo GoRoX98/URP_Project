@@ -1,10 +1,11 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance = null;
-    private LevelManager _currentLevel;
+    private LevelData _selectLevel;
+
+    public LevelData Level => _selectLevel;
 
     private void Awake()
     {
@@ -20,22 +21,21 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        SceneManager.activeSceneChanged += OnSceneChange;
+        LevelCardUI.LevelSelect += SetLevel;
     }
 
     private void OnDisable()
     {
-        SceneManager.activeSceneChanged -= OnSceneChange;
-    }
-
-    private void OnSceneChange(Scene arg0, Scene arg1)
-    {
-        
+        LevelCardUI.LevelSelect -= SetLevel;
     }
 
     public void Save(LevelManager level)
     {
-        PlayerPrefs.SetInt($"{level.Name}", level.CurrentScore);
+        PlayerPrefs.SetInt(level.Name, level.CurrentScore);
         PlayerPrefs.Save();
+        print("Save succes: " + level.Name + " " + level.CurrentScore);
     }
+
+    private void SetLevel(LevelData level) => _selectLevel = level;
+    
 }

@@ -21,4 +21,18 @@ public class LevelData : ScriptableObject
             return score;
         }
     }
+    
+    public int StarsCount(int score)
+    {
+        float maxScore = MaxScore;
+
+        if (score < maxScore * 0.25f)
+            return 0;
+        else if (score < maxScore * 0.5f)
+            return 1;
+        else if (score < maxScore * 0.85)
+            return 2;
+        else
+            return 3;
+    }
 }

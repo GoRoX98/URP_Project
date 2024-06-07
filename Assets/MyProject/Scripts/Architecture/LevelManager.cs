@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
+        if (_data == null)
+            _data = GameManager.Instance.Level;
+
         _player = GameObject.FindGameObjectWithTag("Player").transform;
         _maxScore = _data.MaxScore;
 
@@ -37,11 +41,13 @@ public class LevelManager : MonoBehaviour
     private void OnEnable()
     {
         GameTask.TaskComplete += OnTaskComplete;
+        Exit.OnExit += OnExit;
     }
 
     private void OnDisable()
     {
         GameTask.TaskComplete -= OnTaskComplete;
+        Exit.OnExit -= OnExit;
     }
 
     private void FixedUpdate()
@@ -59,5 +65,6 @@ public class LevelManager : MonoBehaviour
     private void OnExit()
     {
         GameManager.Instance.Save(this);
+        SceneManager.LoadScene("Main");
     }
 }
