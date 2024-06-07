@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-
     [SerializeField] private LevelData _data;
     [SerializeField] private HUD _hud;
 
@@ -12,6 +11,7 @@ public class LevelManager : MonoBehaviour
     private int _currentScore = 0;
     private Transform _player;
     private List<GameTask> _tasks = new List<GameTask>();
+    private List<NPCPresenter> _npcs = new List<NPCPresenter>();
 
     public string Name => _data.Name;
     public int MaxScore => _maxScore;
@@ -30,6 +30,9 @@ public class LevelManager : MonoBehaviour
         { 
             _tasks.Add(GameTaskFabric.CreateGameTask(task, _player));
         }
+
+        foreach (GameObject npc in GameObject.FindGameObjectsWithTag("NPC"))
+            _npcs.Add(new NPCPresenter(npc.GetComponent<NPCView>()));
     }
 
     private void Start()
@@ -48,6 +51,11 @@ public class LevelManager : MonoBehaviour
     {
         GameTask.TaskComplete -= OnTaskComplete;
         Exit.OnExit -= OnExit;
+    }
+
+    private void Update()
+    {
+        _npcs.ForEach(x => x.Update());
     }
 
     private void FixedUpdate()

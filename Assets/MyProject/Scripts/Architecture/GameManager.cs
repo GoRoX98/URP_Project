@@ -33,7 +33,6 @@ public class GameManager : MonoBehaviour
     {
         PlayerPrefs.SetInt(level.Name, level.CurrentScore);
         PlayerPrefs.Save();
-        print("Save succes: " + level.Name + " " + level.CurrentScore);
     }
 
     private void SetLevel(LevelData level) => _selectLevel = level;
