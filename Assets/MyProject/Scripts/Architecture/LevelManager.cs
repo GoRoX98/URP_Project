@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,6 +7,7 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] private LevelData _data;
     [SerializeField] private HUD _hud;
+    [SerializeField] private List<Transform> _transformTaskList = new List<Transform>();
 
     private int _maxScore;
     private int _currentScore = 0;
@@ -25,9 +27,17 @@ public class LevelManager : MonoBehaviour
 
         _player = GameObject.FindGameObjectWithTag("Player").transform;
         _maxScore = _data.MaxScore;
+        List<Transform> transformsTasks = new(_transformTaskList);
+
 
         foreach (TaskData task in _data.Tasks) 
         { 
+            if (task is MoveTaskData moveTask)
+            {
+                moveTask.SetTarget(transformsTasks[0], transformsTasks[1]);
+                transformsTasks.RemoveRange(0, 2);
+            }
+
             _tasks.Add(GameTaskFabric.CreateGameTask(task, _player));
         }
 
@@ -76,3 +86,32 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene("Main");
     }
 }
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(LevelManager))]
+public class EditorLevelManager : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+        SerializedProperty taskList = serializedObject.FindProperty("_transformTaskList");
+        int count = 0;
+        List<TaskData> data = ((LevelData)serializedObject.FindProperty("_data").objectReferenceValue).Tasks;
+
+        foreach (TaskData task in data) 
+        { 
+            if (task is MoveTaskData)
+            {
+                count += 2;
+                if (count > taskList.arraySize)
+                    taskList.arraySize += 2;
+            }
+        }
+
+        if (count < taskList.arraySize)
+            taskList.arraySize = count;
+
+        serializedObject.ApplyModifiedProperties();
+    }
+}
+#endif

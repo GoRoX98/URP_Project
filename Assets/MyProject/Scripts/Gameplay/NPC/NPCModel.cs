@@ -14,6 +14,7 @@ public class NPCModel : IMoveble
     public float Speed => _speed;
     public float MaxSpeed => _maxSpeed;
     public float SpeedIncrase => _speedIncrase;
+    public StateSM State => _machine.CurrentState;
 
     public NPCModel(NavMeshAgent navMesh, float maxSpeed, float speedIncrase)
     {
@@ -28,6 +29,7 @@ public class NPCModel : IMoveble
     {
         _machine.AddState(new IdleState(_machine, _navMesh));
         _machine.AddState(new MoveState(_machine, _navMesh, this));
+        _machine.AddState(new FollowState(_machine, _navMesh, this));
         _machine.SetState<IdleState>();
     }
 
@@ -42,5 +44,13 @@ public class NPCModel : IMoveble
             _timer += Time.deltaTime;
 
         _machine.Update();
+    }
+
+    public void Follow(bool follow, Transform target)
+    {
+        if (follow)
+            _machine.SetState<FollowState>(target);
+        else
+            _machine.SetState<IdleState>();
     }
 }

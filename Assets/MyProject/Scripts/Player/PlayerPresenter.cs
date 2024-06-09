@@ -21,6 +21,12 @@ public class PlayerPresenter : Presenter
                 view.OnInteract(_model);
                 break;
             }
+            else if (collider.TryGetComponent(out NPCView npc))
+            {
+                _model.OnInteract();
+                npc.OnInteract(_view.transform);
+                break;
+            }
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,9 +12,15 @@ public class NPCView : MonoBehaviour
     public float MaxSpeed => _maxSpeed;
     public float SpeedIncrase => _speedIncrase;
     public NavMeshAgent Agent => _agent;
+    public event Action<Transform> Interact;
 
     private void Update()
     {
         _animator.SetFloat("Speed", _agent.speed);
+    }
+    
+    public void OnInteract(Transform target)
+    {
+        Interact?.Invoke(target);
     }
 }

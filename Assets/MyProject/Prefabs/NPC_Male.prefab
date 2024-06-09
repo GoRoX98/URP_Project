@@ -169,6 +169,7 @@ GameObject:
   - component: {fileID: 8409894946040258137}
   - component: {fileID: 6335140367691823518}
   - component: {fileID: 2989211413168122705}
+  - component: {fileID: 5177147242988987157}
   m_Layer: 0
   m_Name: NPC_Male
   m_TagString: NPC
@@ -184,7 +185,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 585773390702790469}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 25.626125, y: 0.55, z: 39.860424}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -254,6 +255,29 @@ MonoBehaviour:
   _speedIncrase: 0.8
   _animator: {fileID: 8409894946040258137}
   _agent: {fileID: 6335140367691823518}
+--- !u!136 &5177147242988987157
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585773390702790469}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &618400963289168386
 GameObject:
   m_ObjectHideFlags: 0

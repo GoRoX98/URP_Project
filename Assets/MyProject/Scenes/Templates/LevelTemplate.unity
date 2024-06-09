@@ -934,16 +934,11 @@ PrefabInstance:
     - target: {fileID: 5721723476799238222, guid: 4adae8232505e0e45b64cc3b61e9d9e1,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5721723476799238222, guid: 4adae8232505e0e45b64cc3b61e9d9e1,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 126
-      objectReference: {fileID: 0}
-    - target: {fileID: 5915041321441941656, guid: 4adae8232505e0e45b64cc3b61e9d9e1,
-        type: 3}
-      propertyPath: m_Convex
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7936834669806457470, guid: 4adae8232505e0e45b64cc3b61e9d9e1,
@@ -9983,6 +9978,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: 1ddf34d940cd4864d8ab82de18411797, type: 2}
   _hud: {fileID: 1531936930}
+  _transformTaskList:
+  - {fileID: 1244182}
+  - {fileID: 6474569346790355210}
 --- !u!4 &267193050
 Transform:
   m_ObjectHideFlags: 0
@@ -23959,6 +23957,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7817389837885126296, guid: fb8dc1ff3ace5f845a066b162fc2cd34,
+        type: 3}
+      propertyPath: _interactLayer.m_Bits
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 7965826494504220554, guid: fb8dc1ff3ace5f845a066b162fc2cd34,
         type: 3}
@@ -38507,7 +38510,7 @@ MonoBehaviour:
   m_OverrideTileSize: 1
   m_TileSize: 16
   m_OverrideVoxelSize: 1
-  m_VoxelSize: 0.3
+  m_VoxelSize: 0.15
   m_MinRegionArea: 0.1
   m_NavMeshData: {fileID: 23800000, guid: 2353bfda85ac26e4dbd1087fbbce5784, type: 2}
   m_BuildHeightMesh: 0
