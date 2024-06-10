@@ -4,6 +4,7 @@ using UnityEngine.AI;
 
 public class NPCView : MonoBehaviour
 {
+    [SerializeField] private AudioSource _footstepAudio;
     [SerializeField] private float _maxSpeed;
     [SerializeField] private float _speedIncrase;
     [SerializeField] private Animator _animator;
@@ -22,5 +23,10 @@ public class NPCView : MonoBehaviour
     public void OnInteract(Transform target)
     {
         Interact?.Invoke(target);
+    }
+
+    private void OnWalk()
+    {
+        _footstepAudio.Play();
     }
 }

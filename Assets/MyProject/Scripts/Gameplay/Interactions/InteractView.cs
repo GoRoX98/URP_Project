@@ -6,6 +6,7 @@ public class InteractView : View, IInteractable
     [SerializeField] private InteractType _interactType;
     [SerializeField] private Vector3 _openRotate;
     [SerializeField] private Vector3 _closeRotate;
+    [SerializeField] private AudioSource _audio;
 
     public InteractType Type => _interactType;
     public event Func<InteractType, object, InteractType> Interact;
@@ -18,5 +19,6 @@ public class InteractView : View, IInteractable
     public void OnInteract(object sender)
     {
         _interactType = (InteractType)Interact?.Invoke(_interactType, sender);
+        _audio.Play();
     }
 }

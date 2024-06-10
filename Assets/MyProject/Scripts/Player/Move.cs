@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class Move : MonoBehaviour
 {
+    [SerializeField] private AudioSource _footstepAudio;
     [SerializeField] private Animator _animator;
     [SerializeField] private CharacterController _charController;
     [SerializeField] private float _walkSpeed = 2f;
@@ -122,5 +123,10 @@ public class Move : MonoBehaviour
             _currentJump = _jumpForce;
             _animator.SetTrigger("Jump");
         }
+    }
+
+    private void OnWalk()
+    {
+        _footstepAudio.Play();
     }
 }
