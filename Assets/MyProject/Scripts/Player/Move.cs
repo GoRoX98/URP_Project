@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -81,6 +82,26 @@ public class Move : MonoBehaviour
             _currentJump -= 4 * Time.deltaTime;
             _currentJump = _currentJump < 0 ? 0 : _currentJump;
         }
+    }
+
+    private void OnTriggerEnter(Collider col)
+    {
+        if (col.tag == "Boost")
+        {
+            StartCoroutine(SpeedUpCoroutine());
+            Destroy(col.gameObject);
+        }
+    }
+
+    private IEnumerator SpeedUpCoroutine()
+    {
+        float oldSpeed = _walkSpeed;
+        _walkSpeed *= 2;
+        _currentSpeed = _walkSpeed;
+
+        yield return new WaitForSeconds(3);
+
+        _walkSpeed = oldSpeed;
     }
 
     private bool IsOnGround()
