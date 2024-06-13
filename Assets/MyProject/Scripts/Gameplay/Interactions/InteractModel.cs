@@ -45,6 +45,12 @@ public class InteractModel : Model
             case InteractType.Destroy:
                 Destroy();
                 return type;
+            case InteractType.Pickup:
+                Pickup(sender);
+                return InteractType.Drop;
+            case InteractType.Drop:
+                Drop(sender);
+                return InteractType.Pickup;
             default:
                 return type;
         }
@@ -55,6 +61,24 @@ public class InteractModel : Model
         await Task.Delay((int)_time * 1000);
 
         UnityEngine.Object.Destroy(_transform.gameObject);
+    }
+
+    private void Pickup(object sender)
+    {
+        if (sender is PlayerModel playerModel)
+        {
+            _transform.parent = playerModel.Backpack;
+            _transform.position = playerModel.Backpack.position;
+        }
+    }
+
+    private void Drop(object sender)
+    {
+        if (sender is PlayerModel playerModel)
+        {
+            _transform.parent = null;
+            _transform.position = playerModel.PlayerTransform.position + playerModel.PlayerTransform.forward;
+        }
     }
 }
 

@@ -31,6 +31,9 @@ public class Move : MonoBehaviour
 
     private void Awake()
     {
+        _maxStamina = PlayerPrefs.GetFloat("StaminaParam", 100);
+        _walkSpeed = PlayerPrefs.GetFloat("SpeedParam", 2);
+
         _stamina = _maxStamina;
         _currentSpeed = _walkSpeed;
         _input = GetComponent<PlayerInput>();
@@ -89,6 +92,8 @@ public class Move : MonoBehaviour
         if (col.tag == "Boost")
         {
             StartCoroutine(SpeedUpCoroutine());
+            if (col.TryGetComponent<VFXOnDestroy>(out VFXOnDestroy vfx))
+                vfx.SpawnParticles();
             Destroy(col.gameObject);
         }
     }

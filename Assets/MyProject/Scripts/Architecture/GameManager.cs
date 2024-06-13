@@ -4,6 +4,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance = null;
     private LevelData _selectLevel;
+    private Wallet _wallet;
 
     public LevelData Level => _selectLevel;
 
@@ -11,6 +12,7 @@ public class GameManager : MonoBehaviour
     {
         if (Instance == null)
         {
+            _wallet = new Wallet(5);
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
@@ -31,8 +33,20 @@ public class GameManager : MonoBehaviour
 
     public void Save(LevelManager level)
     {
-        PlayerPrefs.SetInt(level.Name, level.CurrentScore);
+        if (PlayerPrefs.GetInt(level.Name, 0) < level.CurrentScore)
+            PlayerPrefs.SetInt(level.Name, level.CurrentScore);
+        else
+            return;
+
+        int saveStars = PlayerPrefs.GetInt(level.Name + "Stars", 0);
+        int stars = level.Data.StarsCount(level.CurrentScore);
+        if (stars > saveStars)
+        {
+            PlayerPrefs.SetInt(level.Name + "Stars", stars);
+            PlayerPrefs.SetInt("Stars", _wallet.Stars + (stars - saveStars));
+        }
         PlayerPrefs.Save();
+        _wallet.UpdateStars();
     }
 
     private void SetLevel(LevelData level) => _selectLevel = level;

@@ -19,6 +19,7 @@ public class InteractView : View, IInteractable
     public void OnInteract(object sender)
     {
         _interactType = (InteractType)Interact?.Invoke(_interactType, sender);
-        _audio.Play();
+        if (_audio != null && _audio.clip != null)
+            _audio.Play();
     }
 }

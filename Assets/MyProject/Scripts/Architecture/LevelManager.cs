@@ -18,7 +18,7 @@ public class LevelManager : MonoBehaviour
     public string Name => _data.Name;
     public int MaxScore => _maxScore;
     public int CurrentScore => _currentScore;
-
+    public LevelData Data => _data;
 
     private void Awake()
     {

@@ -5,6 +5,7 @@ public class PlayerView : View
 {
     [SerializeField] private LayerMask _interactLayer;
     [SerializeField] private float _interactZoneRadius = 1f;
+    [SerializeField] private Transform _backpack;
 
     private PlayerInput _input;
     private InputAction _interact;
@@ -14,7 +15,7 @@ public class PlayerView : View
     {
         _input = GetComponent<PlayerInput>();
         _interact = _input.actions["Interact"];
-        PlayerModel model = new PlayerModel(GetComponent<Animator>());
+        PlayerModel model = new PlayerModel(GetComponent<Animator>(), transform, _backpack);
         _presenter = new(model, this);
     }
 
