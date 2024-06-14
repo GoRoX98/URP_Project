@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class MainMenuUI : MonoBehaviour
@@ -15,5 +16,14 @@ public class MainMenuUI : MonoBehaviour
             LevelCardUI card = Instantiate(_levelCardPrefab, _levelContent).GetComponent<LevelCardUI>();
             card.Init(level);
         }
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#endif
     }
 }

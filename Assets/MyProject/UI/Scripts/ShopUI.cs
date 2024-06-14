@@ -12,6 +12,7 @@ public class ShopUI : MonoBehaviour
 
     private void OnEnable()
     {
+        UpdateBalance(Wallet.Instance.Stars);
         Wallet.BalanceChanged += UpdateBalance;
     }
 

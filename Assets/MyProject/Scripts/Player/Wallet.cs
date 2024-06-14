@@ -8,7 +8,11 @@ public class Wallet
     public static Wallet Instance;
     public int Stars
     {
-        get => _stars;
+        get
+        {
+            UpdateStars();
+            return _stars;
+        }
         private set
         {
             _stars = value;
